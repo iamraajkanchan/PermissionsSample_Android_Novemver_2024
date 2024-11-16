@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">PermissionsSample</string>
+    <string name="label_storage_permission">Storage Permission</string>
+    <string name="label_camera_permission">Camera Permission</string>
+    <string name="label_write_permission">Write Permission</string>
+    <string name="label_read_permission">Read Permission</string>
+    <string name="label_pick_a_file">Pick A File</string>
+    <string name="label_image_preview">Image Preview</string>
+    <string name="label_pick_visual_media">Pick Visual Media</string>
+</resources>
