@@ -18,7 +18,7 @@
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="20dp"
             android:contentDescription="@string/label_image_preview"
-            android:scaleType="center"
+            android:scaleType="fitCenter"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button

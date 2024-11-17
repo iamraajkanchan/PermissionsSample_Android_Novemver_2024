@@ -21,7 +21,7 @@ import com.permissions.chinky.R
 class PickVisualMediaActivity : AppCompatActivity() {
 
     private lateinit var pickVisualMediaRequest: PickVisualMediaRequest
-    private lateinit var storagePermissionLauncher: ActivityResultLauncher<String>
+    private lateinit var requestStoragePermissionLauncher: ActivityResultLauncher<String>
     private lateinit var launcher: ActivityResultLauncher<PickVisualMediaRequest>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,9 +39,9 @@ class PickVisualMediaActivity : AppCompatActivity() {
     private fun initViews() {
         val btnPickFile: Button = findViewById(R.id.btnPickFile);
         val imgFilePreview: ImageView = findViewById(R.id.imgFilePreview);
-        storagePermissionLauncher =
-            registerForActivityResult(ActivityResultContracts.RequestPermission(), {
-                if (it) {
+        requestStoragePermissionLauncher =
+            registerForActivityResult(ActivityResultContracts.RequestPermission(), { granted : Boolean ->
+                if (granted) {
                     launcher.launch(pickVisualMediaRequest)
                 } else {
                     showPermissionRationale()
@@ -58,7 +58,7 @@ class PickVisualMediaActivity : AppCompatActivity() {
             ) {
                 launcher.launch(pickVisualMediaRequest)
             } else {
-                storagePermissionLauncher.launch(android.Manifest.permission.READ_EXTERNAL_STORAGE)
+                requestStoragePermissionLauncher.launch(android.Manifest.permission.READ_EXTERNAL_STORAGE)
             }
         }
         launcher = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
@@ -72,7 +72,7 @@ class PickVisualMediaActivity : AppCompatActivity() {
     private fun showPermissionRationale() {
         AlertDialog.Builder(this).setTitle("Read Permission Needed")
             .setMessage("This app needs access to your external storage to fetch images.")
-            .setPositiveButton("OK") { _, _ -> storagePermissionLauncher.launch(android.Manifest.permission.READ_EXTERNAL_STORAGE) }
+            .setPositiveButton("OK") { _, _ -> requestStoragePermissionLauncher.launch(android.Manifest.permission.READ_EXTERNAL_STORAGE) }
             .setNegativeButton("Cancel", null).create().show()
     }
 }

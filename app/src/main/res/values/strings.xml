@@ -7,4 +7,6 @@
     <string name="label_pick_a_file">Pick A File</string>
     <string name="label_image_preview">Image Preview</string>
     <string name="label_pick_visual_media">Pick Visual Media</string>
+    <string name="label_take_a_picture">Take a picture</string>
+    <string name="label_camera_preview">Camera Preview</string>
 </resources>
