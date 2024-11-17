@@ -86,7 +86,7 @@ class StoragePermissionActivity : AppCompatActivity() {
                     StoragePermissionActivity::class.java,
                     Thread.currentThread().stackTrace[2],
                     Logger.getLogger(Utility.APPLICATION_TAG),
-                    exception.message
+                    exception
                 )
             }
         }

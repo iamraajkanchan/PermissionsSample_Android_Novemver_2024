@@ -21,9 +21,9 @@ object Utility {
         klass: Class<T>,
         element: StackTraceElement,
         logger: Logger,
-        message: String?
+        exception: Exception?
     ) {
-        printLog(klass, element, message)
-        logger.log(Level.WARNING, message)
+        printLog(klass, element, exception?.message ?: "Could not trace the message. Please try again!")
+        logger.log(Level.WARNING, exception?.message ?: "Could not trace the message. Please try again!")
     }
 }
