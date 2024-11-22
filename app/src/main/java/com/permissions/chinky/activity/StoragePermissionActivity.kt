@@ -22,7 +22,7 @@ import java.util.logging.Logger
 
 class StoragePermissionActivity : AppCompatActivity() {
 
-    private lateinit var launcher: ActivityResultLauncher<String>
+    private lateinit var readExternalStoragePermissionLauncher: ActivityResultLauncher<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +40,7 @@ class StoragePermissionActivity : AppCompatActivity() {
         val btnWritePermission: Button = findViewById(R.id.btnWritePermission)
         val btnReadPermission: Button = findViewById(R.id.btnReadPermission)
         val btnPickVisualMedia: Button = findViewById(R.id.btnPickVisualMedia)
-        launcher =
+        readExternalStoragePermissionLauncher =
             registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
                 if (isGranted) {
                     Utility.printLog(
@@ -68,7 +68,7 @@ class StoragePermissionActivity : AppCompatActivity() {
             } else if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
                 showPermissionRationaleForStorage()
             } else {
-                launcher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+                readExternalStoragePermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
             }
             Utility.printLog(
                 StoragePermissionActivity::class.java,
@@ -82,7 +82,7 @@ class StoragePermissionActivity : AppCompatActivity() {
                 Thread.currentThread().stackTrace[2],
                 "Before Asking Read Permission"
             )
-            launcher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+            readExternalStoragePermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
             Utility.printLog(
                 StoragePermissionActivity::class.java,
                 Thread.currentThread().stackTrace[2],
@@ -109,7 +109,7 @@ class StoragePermissionActivity : AppCompatActivity() {
             .setTitle("Read Permission Needed")
             .setMessage("This application needs access to your external storage")
             .setPositiveButton("OK") { _, _ ->
-                launcher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+                readExternalStoragePermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
             }
             .setNegativeButton("Cancel", null)
             .create()

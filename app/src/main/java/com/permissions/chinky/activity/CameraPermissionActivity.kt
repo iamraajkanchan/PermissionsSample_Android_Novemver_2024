@@ -33,7 +33,7 @@ import java.util.logging.Logger
 
 class CameraPermissionActivity : AppCompatActivity() {
 
-    private lateinit var requestCameraPermissionLauncher: ActivityResultLauncher<String>
+    private lateinit var cameraPermissionLauncher: ActivityResultLauncher<String>
     private lateinit var cameraLauncher: ActivityResultLauncher<Intent>
     private lateinit var activityCamera: CameraDevice
     private lateinit var textureViewCameraPreview: TextureView
@@ -71,12 +71,12 @@ class CameraPermissionActivity : AppCompatActivity() {
                     }
                 }
             }
-        requestCameraPermissionLauncher =
+        cameraPermissionLauncher =
             registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
                 if (granted) {
                     takePicture()
                 } else {
-                    showPermissionRationale()
+                    showPermissionRationaleForCamera()
                 }
             }
         btnTakeAPicture.setOnClickListener {
@@ -86,8 +86,12 @@ class CameraPermissionActivity : AppCompatActivity() {
                 ) == PackageManager.PERMISSION_GRANTED
             ) {
                 takePicture()
-            } else {
-                requestCameraPermissionLauncher.launch(Manifest.permission.CAMERA)
+            }
+            else if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
+                showPermissionRationaleForCamera()
+            }
+            else {
+                cameraPermissionLauncher.launch(Manifest.permission.CAMERA)
             }
         }
         textureViewCameraPreview.surfaceTextureListener =
@@ -126,10 +130,10 @@ class CameraPermissionActivity : AppCompatActivity() {
         }
     }
 
-    private fun showPermissionRationale() {
+    private fun showPermissionRationaleForCamera() {
         AlertDialog.Builder(this).setTitle("Read Permission Needed")
             .setMessage("This app needs permission to click photographs.")
-            .setPositiveButton("OK") { _, _ -> requestCameraPermissionLauncher.launch(Manifest.permission.CAMERA) }
+            .setPositiveButton("OK") { _, _ -> cameraPermissionLauncher.launch(Manifest.permission.CAMERA) }
             .setNegativeButton("Cancel", null).create().show()
     }
 
@@ -142,7 +146,7 @@ class CameraPermissionActivity : AppCompatActivity() {
                     Manifest.permission.CAMERA
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
-                requestCameraPermissionLauncher.launch(Manifest.permission.CAMERA)
+                cameraPermissionLauncher.launch(Manifest.permission.CAMERA)
                 return
             }
             cameraManager.openCamera(cameraId, object : CameraDevice.StateCallback() {
