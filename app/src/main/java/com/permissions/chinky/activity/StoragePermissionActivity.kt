@@ -1,13 +1,19 @@
 package com.permissions.chinky.activity
 
+import android.Manifest
+import android.app.AlertDialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Button
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.permissions.chinky.R
@@ -57,9 +63,9 @@ class StoragePermissionActivity : AppCompatActivity() {
                 "Before Asking Write Permission"
             )
             // Repeat the same process before asking any permission
-            if (ContextCompat.checkSelfPermission(StoragePermissionActivity::class.java, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                Toast.makeText(StoragePermissionActivity::class.java, "Permission Granted", Toast.LENGTH_SHORT).show()
-            } else if (ActivityCompat.shouldShowRequestPermissionRationale(StoragePermissionActivity::class.java, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show()
+            } else if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
                 showPermissionRationaleForStorage()
             } else {
                 launcher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -76,7 +82,7 @@ class StoragePermissionActivity : AppCompatActivity() {
                 Thread.currentThread().stackTrace[2],
                 "Before Asking Read Permission"
             )
-            launcher.launch(android.Manifest.permission.READ_EXTERNAL_STORAGE)
+            launcher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
             Utility.printLog(
                 StoragePermissionActivity::class.java,
                 Thread.currentThread().stackTrace[2],
@@ -99,13 +105,15 @@ class StoragePermissionActivity : AppCompatActivity() {
     }
 
     private fun showPermissionRationaleForStorage() {
-        AlertDialog.Builder(StoragePermissionActivity::class.java)
-        .setTitle("Read Permission Needed")
-        .setMessage("This application needs access to your external storage")
-        .setPositiveButton("OK", (dialog, which) -> launcher.launch(android.Manifest.permission.READ_EXTERNAL_STORAGE))
-        .setNegativeButton("Cancel", null)
-        .create()
-        .show()
+        AlertDialog.Builder(this)
+            .setTitle("Read Permission Needed")
+            .setMessage("This application needs access to your external storage")
+            .setPositiveButton("OK") { _, _ ->
+                launcher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+            }
+            .setNegativeButton("Cancel", null)
+            .create()
+            .show()
     }
 
 }
