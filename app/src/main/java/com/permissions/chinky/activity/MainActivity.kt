@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         Utility.printLog(MainActivity::class.java, Thread.currentThread().stackTrace[2], "")
         val btnStoragePermission: Button = findViewById(R.id.btnStoragePermission)
         val btnCameraPermission: Button = findViewById(R.id.btnCameraPermission)
+        val btnFragmentLifecycle: Button = findViewById(R.id.btnFragmentLifecycle)
         btnStoragePermission.setOnClickListener {
             Utility.printLog(MainActivity::class.java, Thread.currentThread().stackTrace[2], "onClick")
             val storagePermissionIntent = Intent(this, StoragePermissionActivity::class.java)
@@ -39,6 +40,42 @@ class MainActivity : AppCompatActivity() {
             val cameraPermissionIntent = Intent(this, CameraPermissionActivity::class.java)
             startActivity(cameraPermissionIntent)
         }
+        btnFragmentLifecycle.setOnClickListener {
+            Utility.printLog(MainActivity::class.java, Thread.currentThread().stackTrace[2], "onClick")
+            val fragmentLifecycleInfoIntent = Intent(this, FragmentLifecycleInfoActivity::class.java)
+            startActivity(fragmentLifecycleInfoIntent)
+        }
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Utility.printLog(MainActivity::class.java, Thread.currentThread().stackTrace[2], "")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Utility.printLog(MainActivity::class.java, Thread.currentThread().stackTrace[2], "")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Utility.printLog(MainActivity::class.java, Thread.currentThread().stackTrace[2], "")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Utility.printLog(MainActivity::class.java, Thread.currentThread().stackTrace[2], "")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Utility.printLog(MainActivity::class.java, Thread.currentThread().stackTrace[2], "")
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        Utility.printLog(MainActivity::class.java, Thread.currentThread().stackTrace[2], "")
     }
 
 }

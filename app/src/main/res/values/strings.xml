@@ -9,4 +9,7 @@
     <string name="label_pick_visual_media">Pick Visual Media</string>
     <string name="label_take_a_picture">Take a picture</string>
     <string name="label_camera_preview">Camera Preview</string>
+    <string name="fragment_lifecycle">Fragment Lifecycle</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
