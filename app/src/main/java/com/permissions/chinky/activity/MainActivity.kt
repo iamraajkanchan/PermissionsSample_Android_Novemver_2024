@@ -14,7 +14,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Utility.printLog(MainActivity::class.java, Thread.currentThread().stackTrace[2], "")
+        (if (Thread.currentThread().stackTrace.size > 2) Thread.currentThread().stackTrace[2] else null)?.let {
+            Utility.printLog(MainActivity::class.java, it, "")
+        }
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
