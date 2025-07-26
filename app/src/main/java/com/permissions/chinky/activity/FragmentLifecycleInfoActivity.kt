@@ -5,7 +5,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.fragment.app.FragmentContainer
 import androidx.fragment.app.FragmentContainerView
 import com.permissions.chinky.R
 import com.permissions.chinky.fragments.LifecycleInfoFragment
